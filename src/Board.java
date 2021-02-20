@@ -4,8 +4,7 @@ public class Board {
     private int row;
     private int col;
 
-    public Board(int row, int column, Player... players) {
-        playersOnTheBoard = players;
+    public Board(int row, int column) {
         this.row = row;
         this.col = column;
     }
@@ -23,46 +22,6 @@ public class Board {
     }
 
 
-//    public void createSquares() {
-//        //create the array of square object according to the number of row and column we want
-//        squaresOnTheBoard = new Square[row][col];
-//        //create a first array which elements is stored from left to right
-//        int a = 1;
-//        for (int i = 0; i < row; i++) {
-//            for (int j = 0; j < col; j++) {
-//                squaresOnTheBoard[i][j] = new Square((row * col - a), 0,null);
-//                if (playersOnTheBoard != null) {
-//                    for(int x =0; x< playersOnTheBoard.length; i++){
-//                        if ((playersOnTheBoard[x].getPosition()) == (squaresOnTheBoard[i][j])) {
-//                            squaresOnTheBoard[i][j].addPlayers(playersOnTheBoard[x]);
-//                        }
-//                    }
-//                }
-//                a++;
-//            }
-//        }
-//        /*crete a new array in which element is copy from the first array,
-//        but elements in some tuples are stored in different direction so that the rows of the board can wrap
-//        */
-//        Square[][] newArray = new Square[row][col];
-//        for (int i = 0; i < row; i++) {
-//            //print the position of the square object from right to left if i is an even number
-//            if (i % 2 == 0) {
-//                for (int j = 0; j < col; j++) {
-//                    newArray[i][j] = squaresOnTheBoard[i][j];
-//                }
-//                //print the position of the square object from right to left if i is an odd number
-//            } else if (i % 2 != 0) {
-//                int b = 1;
-//                for (int j = 0; j < col; j++) {
-//                    newArray[i][j] = squaresOnTheBoard[i][col - b];
-//                    b++;
-//                }
-//            }
-//        }
-//        squaresOnTheBoard = newArray;
-//    }
-
     public void createSquares() {
         //create the array of square object according to the number of row and column we want
         squaresOnTheBoard = new Square[row][col];
@@ -74,7 +33,7 @@ public class Board {
                 position++;
             }
         }
-        /*crete a new array in which element is copy from the first array,
+        /*crete a new array in which element is copied from the first array,
         but elements in some tuples are stored in different direction so that the rows of the board can wrap
         */
         Square[][] newArray = new Square[row][col];
@@ -85,7 +44,7 @@ public class Board {
                     newArray[i][j] = squaresOnTheBoard[i][j];
                 }
                 //print the position of the square object from right to left if i is an odd number
-            } else if (i % 2 != 0) {
+            } else {
                 int b = 1;
                 for (int j = 0; j < col; j++) {
                     newArray[i][j] = squaresOnTheBoard[i][col - b];
@@ -95,20 +54,6 @@ public class Board {
         }
         squaresOnTheBoard = newArray;
     }
-
-//    public void assignPlayersToSquare() {
-//        int a = 0;
-//        do {
-//            for (int i = 0; i < row; i++) {
-//                for (int j = 0; j < col; j++) {
-//                    if ((playersOnTheBoard[a].getPlayerPosition()) == (squaresOnTheBoard[i][j])) {
-//                        squaresOnTheBoard[i][j].addPlayers(playersOnTheBoard[a]);
-//                    }
-//                }
-//            }
-//            a++;
-//        } while (a < playersOnTheBoard.length);
-//    }
 
     public void assignPlayersToSquare() {
         int a = 0;
@@ -128,7 +73,7 @@ public class Board {
         do {
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
-                    if ((playersOnTheBoard[a].getPlayerPosition()) == (squaresOnTheBoard[i][j])) {
+                    if ((playersOnTheBoard[a].getPlayerSquare()) == (squaresOnTheBoard[i][j])) {
                         squaresOnTheBoard[i][j].addPlayers(playersOnTheBoard[a]);
                     }
                 }
@@ -150,10 +95,9 @@ public class Board {
                 newPlayers[0] = o;
                 //Player always start at position 0
                 newPlayers[0].setPosition(squaresOnTheBoard[0][0]);
-                playersOnTheBoard = newPlayers;
                 //if an old Player array already exist
-            } else if (playersOnTheBoard != null) {
-                int playerLength = playersOnTheBoard.length;
+            } else {
+
                 //create a new array where array length is the old array +1
                 newPlayers = new Player[playersOnTheBoard.length + 1];
                 for (int i = 0; i < newPlayers.length - 1; i++) {
@@ -164,9 +108,9 @@ public class Board {
                 newPlayers[newPlayers.length - 1] = o;
                 //Player always start at position 0
                 newPlayers[newPlayers.length - 1].setPosition(squaresOnTheBoard[0][0]);
-                playersOnTheBoard = newPlayers;
             }
-        } catch (NullPointerException g) {
+            playersOnTheBoard = newPlayers;
+        } catch (NullPointerException e) {
             System.out.println("Square is not created yet. Please create squares before adding Player.");
         }
     }
@@ -180,13 +124,11 @@ public class Board {
                 if (squaresOnTheBoard[i][j].getPlayersAtTheSquare()[0] == null) {
                     String delta = "(    )";
                     int position = squaresOnTheBoard[i][j].getSquarePosition();
-                    if (squaresOnTheBoard[i][j].getDelta() == 0) {
-                        System.out.print(String.format("%15d", position) + delta);
-                    } else {
+                    if (squaresOnTheBoard[i][j].getDelta() != 0) {
                         delta = "(" + String.format("%4d", squaresOnTheBoard[i][j].getDelta()) + ")";
-                        System.out.print(String.format("%15d", position) + delta);
                     }
-                } else if (squaresOnTheBoard[i][j].getPlayersAtTheSquare()[0] != null) {
+                    System.out.print(String.format("%15d", position) + delta);
+                } else {
                     //use String to store player identifier rather than char, because char type is not big enough to store more than one character
                     String playerIdentifier = "";
                     int position = -1;
@@ -196,12 +138,10 @@ public class Board {
                         position = squaresOnTheBoard[i][j].getSquarePosition();
                     }
                     String identifierAndPosition = playerIdentifier + position;
-                    if (squaresOnTheBoard[i][j].getDelta() == 0) {
-                        System.out.print(String.format("%15s", identifierAndPosition) + delta);
-                    } else {
+                    if (squaresOnTheBoard[i][j].getDelta() != 0) {
                         delta = "(" + String.format("%4d", squaresOnTheBoard[i][j].getDelta()) + ")";
-                        System.out.print(String.format("%15s", identifierAndPosition) + delta);
                     }
+                    System.out.print(String.format("%15s", identifierAndPosition) + delta);
 
                 }
 
@@ -210,16 +150,7 @@ public class Board {
         }
     }
 
-//    public void setSquareDelta() {
-//        this.squaresOnTheBoard[9][1].setDelta(-3);
-//        this.squaresOnTheBoard[6][0].setDelta(-1);
-//        this.squaresOnTheBoard[6][2].setDelta(-4);
-//        this.squaresOnTheBoard[6][3].setDelta(2);
-//        this.squaresOnTheBoard[6][4].setDelta(-1);
-//        this.squaresOnTheBoard[5][0].setDelta(-4);
-//        this.squaresOnTheBoard[3][1].setDelta(4);
-//        this.squaresOnTheBoard[3][4].setDelta(-1);
-//    }
+    // todo - Add toString() method
 
 
     public String findRowColOfPosition(int position) {
@@ -255,20 +186,13 @@ public class Board {
         return squareReference;
     }
 
-
-    public void printPlayersOnTheBoard() {
-        for(int i=0; i<playersOnTheBoard.length; i++){
-        System.out.print( playersOnTheBoard[i]);
-     }
-    }
-
     public boolean takeTurns(Board b) {
         boolean win = false;
         for (int i = 0; i < playersOnTheBoard.length; i++) {
             System.out.println(playersOnTheBoard[i].getIdentifier() + " 's turn");
             //if player is a human player, run human move() and check if human is wining
             if (playersOnTheBoard[i] instanceof HumanPlayer) {
-                if (((HumanPlayer) playersOnTheBoard[i]).move(b) == true) {
+                if (playersOnTheBoard[i].move(b) == true) {
                     //if the player wins the game, set variable win to true
                     win = true;
                     //draw the board after every move

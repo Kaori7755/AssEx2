@@ -3,22 +3,13 @@ public class Square {
     private Player[] playersAtTheSquare = new Player[1];
     private int delta;
 
-    /*
-    delta indicates a ladder or snake stating at a square
-    a positive number indicates a ladder
-    a negative number indicates a snake
-    0 indicates there is no ladder or snake at a square
-     */
+
     public Square(int position, int delta, Player players) {
         this.position = position;
         this.delta = delta;
         playersAtTheSquare[0] = players;
     }
 
-
-    public void setSquarePosition(int position) {
-        this.position = position;
-    }
 
     public void addPlayers(Player o) {
         Player[] newPlayers = null;

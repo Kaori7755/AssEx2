@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
+    //use Scanner(System.in) to get the input, and assign the integer input to variable 'count'
+    private Scanner s = new Scanner(System.in);
 
     public HumanPlayer(char identifier, Square position) {
         super(identifier, position);
@@ -9,13 +11,12 @@ public class HumanPlayer extends Player {
 
 
 //override the move method
-    public boolean move(Board b){
-        //use Scanner(System.in) to get the input, and assign the integer input to variable 'count'
-    Scanner s = new Scanner(System.in);
+public boolean move(Board b){
+
     System.out.println("Please enter an integer between 1 - 6.");
     int count =  s.nextInt();
     //new position is current position + the input
-    int newPositionInt = this.playerSqaure.getSquarePosition() + count;
+    int newPositionInt = this.getPlayerSquare().getSquarePosition() + count;
     System.out.println("New position is "+newPositionInt);
         //if new Position is >= the highest point, the winner wins
         if (newPositionInt>=(((b.getRow())*(b.getCol()))-1)){
@@ -41,8 +42,8 @@ public class HumanPlayer extends Player {
             int column = Integer.parseInt(tokens[1]);
             //set this position to the right square located in the provided row and column
             this.setPosition(b.getSquaresOnTheBoard(row, column));
-            if (this.playerSqaure.getDelta() != 0) {
-                newPositionInt = this.playerSqaure.getSquarePosition() + (this.playerSqaure.getDelta());
+            if (this.getPlayerSquare().getDelta() != 0) {
+                newPositionInt = this.getPlayerSquare().getSquarePosition() + (this.getPlayerSquare().getDelta());
                 //find where the square is on the board
                 squareLocation = b.findRowColOfPosition(newPositionInt);
                 tokens = squareLocation.split(",");

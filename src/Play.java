@@ -8,7 +8,7 @@ public class Play {
         Player a = new Player('A', null);
 //        //create a board
 //        //the player array of the board is null because no player is added on the board yet
-        Board boardNoHuman = new Board(10,5,null);
+        Board boardNoHuman = new Board(10,5);
 //        //create the squares of the board
         boardNoHuman.createSquares();
 //        //add the players on to the board
@@ -33,9 +33,9 @@ public class Play {
            win = boardNoHuman.takeTurns(boardNoHuman);
         }while(win==false);
         //new round
-        System.out.println("New Round.");
+        System.out.println("New Round. \n -------------------- ");
         //create new board - boardWithHuman
-        Board boardWithHuman = new Board(10,5,null);
+        Board boardWithHuman = new Board(10,5);
         boardWithHuman.createSquares();
         //add deltas to squares
         boardWithHuman.getSquaresOnTheBoard(9,1).setDelta(-3);
@@ -56,7 +56,6 @@ public class Play {
         //draw the new board
         boardWithHuman.drawBoard();
         //human player and other players play together
-        win = false;
         win = false;
         do{
             win = boardWithHuman.takeTurns(boardWithHuman);

@@ -1,21 +1,23 @@
 import java.util.Random;
 
 public class Player {
-    protected char identifier;
-    protected Square playerSqaure;
+
+    private char identifier;
+    private Square playerSquare;
+    private Random r = new Random();
 
     public Player(char identifier,Square position){
         this.identifier = identifier;
-        this.playerSqaure = position;
+        this.playerSquare = position;
     }
 
 
     public String toString() {
         String playerString = "Player\nPlayer identifier is " + this.identifier + ".";
-        if (this.playerSqaure != null) {
-            playerString += "Player position is " + this.playerSqaure.getSquarePosition() + ".";
-
+        if (this.playerSquare != null) {
+            playerString += "Player position is " + this.playerSquare.getSquarePosition() + ".";
         }
+
         return playerString;
     }
 
@@ -27,22 +29,22 @@ public class Player {
         this.identifier = identifier;
     }
 
-    public Square getPlayerPosition() {
-        return playerSqaure;
+    public Square getPlayerSquare() {
+        return playerSquare;
     }
 
     public void setPosition(Square position) {
-        this.playerSqaure = position;
+        this.playerSquare = position;
     }
 
 
 
     public boolean move(Board b) {
-        Random r = new Random();
+
         //r.nextInt will return the value between 0-5, so we need to +1 to get 1-6
         int count = r.nextInt(6)+1;
         //find the position the player should move to: where the player is at + count
-        int newPositionInt = this.playerSqaure.getSquarePosition() + count;
+        int newPositionInt = this.playerSquare.getSquarePosition() + count;
         System.out.println("Count is " + count );//for testing
         System.out.println("New position is "+newPositionInt);//for testing
         //if new Position is >= the highest point, the winner wins
@@ -70,8 +72,8 @@ public class Player {
             int column = Integer.parseInt(tokens[1]);
             //set this position to the right square located in the provided row and column
             this.setPosition(b.getSquaresOnTheBoard(row, column));
-            if (this.playerSqaure.getDelta() != 0) {
-                newPositionInt = this.playerSqaure.getSquarePosition() + (this.playerSqaure.getDelta());
+            if (this.playerSquare.getDelta() != 0) {
+                newPositionInt = this.playerSquare.getSquarePosition() + (this.playerSquare.getDelta());
                 //find where the square is on the board
                 squareLocation = b.findRowColOfPosition(newPositionInt);
                 tokens = squareLocation.split(",");
@@ -89,13 +91,18 @@ public class Player {
 
     public static void main(String[] args) {
         //demonstrate the creation of a player,
-        //Square object is not yet crated so the value in position is null
-        Player E = new Player('E', null);
+        //Square object is not yet created so the value in position is null
+        Player player = new Player('E', null);
         //demonstrate the creation of a square
-        Square square28 = new Square(28, 0, null);
+        Square square28 = new Square(28, 0, player);
         //demonstrate the assignment of the Player to the Square
-        //use setPosition method to set the position of Player E
-        E.setPosition(square28);
+        //use setPosition method to set the position of Player
+        player.setPosition(square28);
+
+        //demonstrate toString() method of player and square
+        System.out.println(player);
+        System.out.println(square28);
+
 
     }
 }
