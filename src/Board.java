@@ -150,15 +150,23 @@ public class Board {
         }
     }
 
-    // todo - Add toString() method
+    public String toString() {
+        String board = "\nSquares on the board:";
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                board += "\n" + squaresOnTheBoard[i][j].toString();
+            }
+        } return board;
+    }
 
 
-    public String findRowColOfPosition(int position) {
-        String rowCol = "";
+    public int[] findRowColOfPosition(int position) {
+        int[] rowCol = new int[2];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (squaresOnTheBoard[i][j].getSquarePosition() == position) {
-                    rowCol = i + "," + j;
+                    rowCol[0] = i;
+                    rowCol[1]=j;
                 }
             }
         }
@@ -178,10 +186,9 @@ public class Board {
 
     public Square squareReference(int position) {
         //find the row and column of the given position
-        String o = findRowColOfPosition(position);
-        String[] tokens = o.split(",");
-        int row = Integer.parseInt(tokens[0]);
-        int column = Integer.parseInt(tokens[1]);
+        int[] o = findRowColOfPosition(position);
+        int row = o[0];
+        int column = o[1];
         Square squareReference = squaresOnTheBoard[row][column];
         return squareReference;
     }
@@ -233,5 +240,6 @@ public class Board {
         board.addPlayers(S);
         //draw the board
         board.drawBoard();
+        System.out.println(board);
     }
 }

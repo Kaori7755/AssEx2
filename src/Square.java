@@ -57,7 +57,7 @@ public class Square {
 
     public String toString() {
         String k = "";
-        String square = "Square\n" + "Square position is " + this.position + ". The delta value of the square is " + this.getDelta() + ".";
+        String square = "Square position is " + this.position + ". The delta value of the square is " + this.getDelta() + ".";
         if (playersAtTheSquare[0] != null) {
             for (int i = 0; i < playersAtTheSquare.length - 1; i++) {
                 k += playersAtTheSquare[i].getIdentifier() + ",";

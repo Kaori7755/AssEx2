@@ -6,10 +6,10 @@ public class Play {
         Player e = new Player('E', null);
         Player s = new Player('S', null);
         Player a = new Player('A', null);
-//        //create a board
-//        //the player array of the board is null because no player is added on the board yet
+        //create a board
+        //the player array of the board is null because no player is added on the board yet
         Board boardNoHuman = new Board(10,5);
-//        //create the squares of the board
+        //create the squares of the board
         boardNoHuman.createSquares();
 //        //add the players on to the board
 //        //squares must be created before adding players to the board, which is a two dimensional array of Square objects
