@@ -1,0 +1,52 @@
+Square Class
+•	Square object consists of: position / Player references (array) / delta (=0 if not snake or ladder)
+•	setDelta()
+•	toString()  - returns a string representation of the square consisting of player information (from the toString method) for all players currently at the square, the square position, and the value of delta in brackets (if delta is not zero).
+Player Class
+•	attribute of type char that allows them to be identified (identifier)
+•	a reference to the square in what they are currently located at (a square reference)
+•	toString() - just returns this (identifier) as a string
+•	move()
+- return a binary value: true if the move they make results in winning, and false otherwise
+- roll a die and move the player forward the relevant number of places
+- If a player’s move ends up on a square with a delta, they should move forward or backward by the relevant number of spaces
+Task1:
+•	create Player and Square Classes
+•	Player main() - demonstrates: the creation of a player & a square / the assignment of the player to the square/ toSting() of Player and Square
+Board
+•	Constructor: should take integers representing the number of rows and columns
+•	player always start at position 0 – add()
+•	board should always be drawn: row containing the final position (49 in our example) is the top and the starting row (containing 0) is at the bottom, and should wrap
+•	attribute: array of Square objects / references to all players playing the game
+•	toString() -  draw the board
+•	2 helper methods:
+1.	Return the return the row and column of a particular position
+2.	Return the position corresponding to a particular row, column pair
+•	addPlayer() - When players are added, the board should store a reference to them for future use and place them on the starting square.
+•	returnReference() - returns a reference to the Square object at any integer position
+•	takeTurns()
+- return boolean
+- loops through the players and calls each of their move methods
+- If a move method returns true, that player has won and takeTurns should immediately termina//if thte, and return true
+- otherwise false
+Task2:
+•	create Board Class
+•	board main() –
+1.	creates a board with 10 rows and 5 columns
+2.	create two players
+3.	add them to the board
+4.	print the board
+Task 4
+Play Class
+•	main()
+- create a board
+- create some players
+- start a game
+- play the game until completion
+- add deltas to some squares (at least two snakes, and two ladders)
+- use HumanPlayer
+Task 5
+HumanPlayer Class
+•	extends Player
+•	human move()
+-	message to request input integer (1-6)

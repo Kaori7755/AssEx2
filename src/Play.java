@@ -11,12 +11,12 @@ public class Play {
         Board boardNoHuman = new Board(10,5);
         //create the squares of the board
         boardNoHuman.createSquares();
-//        //add the players on to the board
-//        //squares must be created before adding players to the board, which is a two dimensional array of Square objects
+        //add the players on to the board
+        //squares must be created before adding players to the board, which is a two dimensional array of Square objects
         boardNoHuman.addPlayers(e);
         boardNoHuman.addPlayers(s);
         boardNoHuman.addPlayers(a);
-//        //set delta of the squares
+        //set delta of the squares
         boardNoHuman.getSquaresOnTheBoard(9,1).setDelta(-3);
         boardNoHuman.getSquaresOnTheBoard(6,0).setDelta(-1);
         boardNoHuman.getSquaresOnTheBoard(6,2).setDelta(-4);
@@ -25,8 +25,9 @@ public class Play {
         boardNoHuman.getSquaresOnTheBoard(5,0).setDelta(-4);
         boardNoHuman.getSquaresOnTheBoard(3,1).setDelta(4);
         boardNoHuman.getSquaresOnTheBoard(3,4).setDelta(-1);
-       //draw the board
-        boardNoHuman.drawBoard();
+       //draw the board using Board To String method
+       //can also draw the board using the drawBoard method in Board class: System.out.print(boardNoHuman.drawBoard());
+       System.out.println(boardNoHuman);
        //play the game until a player wins
         boolean win = false;
         do{
@@ -34,6 +35,7 @@ public class Play {
         }while(win==false);
         //new round
         System.out.println("New Round. \n -------------------- ");
+
         //create new board - boardWithHuman
         Board boardWithHuman = new Board(10,5);
         boardWithHuman.createSquares();
@@ -54,14 +56,12 @@ public class Play {
         boardWithHuman.addPlayers(s);
         boardWithHuman.addPlayers(a);
         //draw the new board
-        boardWithHuman.drawBoard();
+       System.out.print(boardWithHuman);
         //human player and other players play together
         win = false;
         do{
             win = boardWithHuman.takeTurns(boardWithHuman);
         }while(win==false);
     }
-
-
 
 }

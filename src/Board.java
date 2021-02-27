@@ -78,7 +78,7 @@ public class Board {
                     }
                 }
             }
-            //a represent the each player reference, when a player is assigned to the corresponding square,
+            //'a' represent the each player reference, when a player is assigned to the corresponding square,
             // move to the next player (a++) and restart the loop until it finds the corresponding square, then assign the player to it
             a++;
         } while (a < playersOnTheBoard.length);
@@ -88,16 +88,16 @@ public class Board {
     public void addPlayers(Player o) {
         Player[] newPlayers;
         try {
-            //if an old Player array doesn't exist
+            //if an old Player array doesn't exist (ie.e no player on the board)
             //create a Player array with the length 1
             if (playersOnTheBoard == null) {
                 newPlayers = new Player[1];
                 newPlayers[0] = o;
                 //Player always start at position 0
                 newPlayers[0].setPosition(squaresOnTheBoard[0][0]);
-                //if an old Player array already exist
-            } else {
 
+            } else {
+                //if an old Player array already exist
                 //create a new array where array length is the old array +1
                 newPlayers = new Player[playersOnTheBoard.length + 1];
                 for (int i = 0; i < newPlayers.length - 1; i++) {
@@ -110,60 +110,35 @@ public class Board {
                 newPlayers[newPlayers.length - 1].setPosition(squaresOnTheBoard[0][0]);
             }
             playersOnTheBoard = newPlayers;
+            //if NullPointerException is caught, print out a reminder message
         } catch (NullPointerException e) {
             System.out.println("Square is not created yet. Please create squares before adding Player.");
         }
     }
 
 
-    public void drawBoard() {
+    public String toString() {
         //always update the player and square relationship before drawing the board
         assignPlayersToSquare();
+        //draw the board using Square toString method
+        String drawBoard ="";
         for (int i = row - 1; i >= 0; i--) {
             for (int j = 0; j < col; j++) {
-                if (squaresOnTheBoard[i][j].getPlayersAtTheSquare()[0] == null) {
-                    String delta = "(    )";
-                    int position = squaresOnTheBoard[i][j].getSquarePosition();
-                    if (squaresOnTheBoard[i][j].getDelta() != 0) {
-                        delta = "(" + String.format("%4d", squaresOnTheBoard[i][j].getDelta()) + ")";
-                    }
-                    System.out.print(String.format("%15d", position) + delta);
-                } else {
-                    //use String to store player identifier rather than char, because char type is not big enough to store more than one character
-                    String playerIdentifier = "";
-                    int position = -1;
-                    String delta = "(    )";
-                    for (int a = 0; a < squaresOnTheBoard[i][j].getPlayersAtTheSquare().length; a++) {
-                        playerIdentifier += squaresOnTheBoard[i][j].getPlayersAtTheSquare()[a].getIdentifier() + " ";
-                        position = squaresOnTheBoard[i][j].getSquarePosition();
-                    }
-                    String identifierAndPosition = playerIdentifier + position;
-                    if (squaresOnTheBoard[i][j].getDelta() != 0) {
-                        delta = "(" + String.format("%4d", squaresOnTheBoard[i][j].getDelta()) + ")";
-                    }
-                    System.out.print(String.format("%15s", identifierAndPosition) + delta);
-
-                }
-
-            }
-            System.out.println();
-        }
+                drawBoard += squaresOnTheBoard[i][j].toString();
+            } drawBoard+="\n";
+        } return drawBoard;
     }
 
-    public String toString() {
-        String board = "\nSquares on the board:";
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                board += "\n" + squaresOnTheBoard[i][j].toString();
-            }
-        } return board;
-    }
 
 
     public int[] findRowColOfPosition(int position) {
         int[] rowCol = new int[2];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
+                /* Go through every square,
+                 if the square position matches the parameter, store i to rowCol[0] and store j to rowCol[1].
+                 RowCol[0] is the row of the position, rowCol[1] is the column of the position
+                 */
                 if (squaresOnTheBoard[i][j].getSquarePosition() == position) {
                     rowCol[0] = i;
                     rowCol[1]=j;
@@ -176,8 +151,10 @@ public class Board {
     public int findPositionInRowCol(int row, int col) {
         int position = 0;
         try {
+            //find the square using the row and column provided, then get the position of the square using the getter
             position = squaresOnTheBoard[row][col].getSquarePosition();
-        } catch (ArrayIndexOutOfBoundsException a) {
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //if ArrayIndexOutOfBoundsException is caught
             System.out.println("Please check your input. Row number should not be bigger than " + (this.row - 1) + " and column number should not be bigger than " + (this.col - 1) + ".");
         } finally {
             return position;
@@ -185,7 +162,9 @@ public class Board {
     }
 
     public Square squareReference(int position) {
-        //find the row and column of the given position
+        /*Find the row and column of the given position, using findRowColOfPosition(),
+        then store the result (the square object)in a new square reference, finally return the reference
+         */
         int[] o = findRowColOfPosition(position);
         int row = o[0];
         int column = o[1];
@@ -195,31 +174,34 @@ public class Board {
 
     public boolean takeTurns(Board b) {
         boolean win = false;
+        //loop through the players and calls each of their move methods
         for (int i = 0; i < playersOnTheBoard.length; i++) {
             System.out.println(playersOnTheBoard[i].getIdentifier() + " 's turn");
-            //if player is a human player, run human move() and check if human is wining
+            //if player is a human player, run human move method and check if human is wining
             if (playersOnTheBoard[i] instanceof HumanPlayer) {
                 if (playersOnTheBoard[i].move(b) == true) {
                     //if the player wins the game, set variable win to true
                     win = true;
                     //draw the board after every move
-                    b.drawBoard();
+                    System.out.print(b);
                     //if the human player wins, print out a win statement with the player identifier
                     System.out.println(playersOnTheBoard[i].getIdentifier() + " wins");
+                    //then return true and takeTurns immediately terminate
                     return win;
                 }else{
                     //draw the board after every move
-                    b.drawBoard();
+                    System.out.print(b);
                 }
             }else
-                //if player is not a human, run computer move() and check if computer is wining
+                //if player is not a human, run computer move method and check if computer is wining
                 if (playersOnTheBoard[i].move(b) == true) {
                     win = true;
-                    b.drawBoard();
+                    System.out.print(b);
                     System.out.println(playersOnTheBoard[i].getIdentifier() + " wins");
                     return win;
                 } else
-                    b.drawBoard();
+                    //draw the board after every move
+                    System.out.print(b);
             //if no one wins, return the variable win, which should be false at this point
             }return win;
         }
@@ -232,14 +214,13 @@ public class Board {
         board.createSquares();
         //create two player, here I created Player E and Player S
         //create Player E, position is null because Player is not on the board yet, so the player has no position yet
-        Player E = new Player('E', null);
+        Player e = new Player('E', null);
         //create Player S
-        Player S = new Player('S', null);
+        Player s = new Player('S', null);
         //add player E and S to the board
-        board.addPlayers(E);
-        board.addPlayers(S);
+        board.addPlayers(e);
+        board.addPlayers(s);
         //draw the board
-        board.drawBoard();
         System.out.println(board);
     }
 }
