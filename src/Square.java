@@ -11,7 +11,7 @@ public class Square {
     }
 
 
-    public void addPlayers(Player o) {
+    public void addPlayersToSquare(Player o) {
         //create the reference of a Player array, not pointing to any Player array yet
         Player[] newPlayers = null;
         /*
@@ -61,24 +61,25 @@ public class Square {
         /*
         Return a String representation of the square consisting of position, delta (if delta is not 0) and player.
          */
-        String p = "";
-        String s = "" + this.position;
-        String whole= "";
+
+        String playerInformation = ""; //contain player information
+        String squareInformation = "" + this.position; //contain square information
+        String square= ""; //contain all information the String representation of the square should hold
 
         if (playersAtTheSquare[0] != null) {
             for (int i = 0; i < playersAtTheSquare.length ; i++) {
-                p += playersAtTheSquare[i].toString() + " ";
+                playerInformation += playersAtTheSquare[i].toString() + " ";
             }
         }
 
         if(this.delta!=0) {
-            s += "(" + String.format("%4d", this.delta) + ")";
+            squareInformation += "(" + String.format("%4d", this.delta) + ")";
         }
         else{
-               s += "(    )";
+            squareInformation += "(    )";
             }
-        whole = p+s;
-        return String.format("%20s",whole);
+        square = playerInformation+squareInformation;
+        return String.format("%20s",square);
     }
 
 

@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Player {
 
-    private char identifier;
+    private final char identifier; //player identifier is final because it not going to be changed later on
     private Square playerSquare; //indicate the square the play is currently located at
     private Random r = new Random(); //for rolling a die
 
@@ -48,7 +48,7 @@ public class Player {
          */
         if (newPositionInt>=(((b.getRow())*(b.getCol()))-1)){
             /*Put the player into the highest position if player reaches the highest point or higher, because it's easier for us to see who wins
-              So the Player identify will always be at the highest position when the Player wins.
+              So the Player will always be at the highest position when the Player wins.
               Find the row and column of the highest point using findRowColOfPosition method from board,
               and put player to the square located in the provided row and column
              */
@@ -96,9 +96,9 @@ public class Player {
         //demonstrate the assignment of the Player to the Square
         //1. use setPosition method to set the position of Player
         player.setPosition(square28);
-        //2. create and add new player - player1 to square28 using addPlayer method of Square
+        //2. create and add new player - player1 to square28 using addPlayerToSquare method of Square
         Player player1 = new Player('S', square28);
-        square28.addPlayers(player1);
+        square28.addPlayersToSquare(player1);
         //demonstrate toString() method of player and square
         System.out.println(player);
         System.out.println(square28);

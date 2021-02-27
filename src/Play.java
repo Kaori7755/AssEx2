@@ -13,9 +13,9 @@ public class Play {
         boardNoHuman.createSquares();
         //add the players on to the board
         //squares must be created before adding players to the board, which is a two dimensional array of Square objects
-        boardNoHuman.addPlayers(e);
-        boardNoHuman.addPlayers(s);
-        boardNoHuman.addPlayers(a);
+        boardNoHuman.addPlayersToBoard(e);
+        boardNoHuman.addPlayersToBoard(s);
+        boardNoHuman.addPlayersToBoard(a);
         //set delta of the squares
         boardNoHuman.getSquaresOnTheBoard(9,1).setDelta(-3);
         boardNoHuman.getSquaresOnTheBoard(6,0).setDelta(-1);
@@ -51,10 +51,10 @@ public class Play {
         //create human player
         HumanPlayer human = new HumanPlayer('H', null);
         //add human player and computer players to new board - boardWithHuman
-        boardWithHuman.addPlayers(human);
-        boardWithHuman.addPlayers(e);
-        boardWithHuman.addPlayers(s);
-        boardWithHuman.addPlayers(a);
+        boardWithHuman.addPlayersToBoard(human);
+        boardWithHuman.addPlayersToBoard(e);
+        boardWithHuman.addPlayersToBoard(s);
+        boardWithHuman.addPlayersToBoard(a);
         //draw the new board
        System.out.print(boardWithHuman);
         //human player and other players play together

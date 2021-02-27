@@ -74,7 +74,7 @@ public class Board {
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
                     if ((playersOnTheBoard[a].getPlayerSquare()) == (squaresOnTheBoard[i][j])) {
-                        squaresOnTheBoard[i][j].addPlayers(playersOnTheBoard[a]);
+                        squaresOnTheBoard[i][j].addPlayersToSquare(playersOnTheBoard[a]);
                     }
                 }
             }
@@ -85,7 +85,7 @@ public class Board {
     }
 
 
-    public void addPlayers(Player o) {
+    public void addPlayersToBoard(Player o) {
         Player[] newPlayers;
         try {
             //if an old Player array doesn't exist (ie.e no player on the board)
@@ -218,8 +218,8 @@ public class Board {
         //create Player S
         Player s = new Player('S', null);
         //add player E and S to the board
-        board.addPlayers(e);
-        board.addPlayers(s);
+        board.addPlayersToBoard(e);
+        board.addPlayersToBoard(s);
         //draw the board
         System.out.println(board);
     }
